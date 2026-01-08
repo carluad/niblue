@@ -6,6 +6,7 @@ RELEASE="$(rpm -E %fedora)"
 
 dnf install -y gnome-shell gdm gnome-software epiphany nautilus thermald 
 dnf install -y fastfetch distrobox podman-compose podman-docker
+dnf remove -y gnome-software-rpm-ostree PackageKit
 
 # Turtle for nautilus
 # dnf install -y python3-pygit2 python3-secretstorage nautilus-python meld
