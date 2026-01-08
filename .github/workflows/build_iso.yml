@@ -8,7 +8,12 @@ on:
       - '.github/workflows/build_iso.yml'
 
 env:
-  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  ARCH: x86_64
+  IMAGE_NAME: niblue
+  IMAGE_REPO: ghcr.io/${{ github.repository_owner }}
+  IMAGE_TAG: latest
+  VERSION: 43
+  VARIANT: generic
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
@@ -21,38 +26,28 @@ jobs:
       contents: read
       packages: write
       id-token: write
-    container:
-      image: fedora:${{ matrix.major_version }}
-      options: "--privileged"
-      volumes:
-        - "/:/host"
-    strategy:
-      fail-fast: false
-      matrix:
-        image_name: [niblue]
-        major_version: [43]
-        image_tag: [latest, gts, stable]
-
     steps:
-      - name: Build ISOs
-        uses: ublue-os/isogenerator@1.0.9
+      - name: Build
+        uses: jasonn3/build-container-installer@main
         id: build
         with:
-          ARCH: x86_64
-          IMAGE_NAME: ${{ matrix.image_name }}
-          IMAGE_REPO: ghcr.io/carluad
-          VARIANT: 'Silverblue'
-          VERSION: ${{ matrix.major_version }}
-          IMAGE_TAG: ${{ matrix.image_tag }}
-          WEB_UI: true
+          arch: ${{ env.ARCH}}
+          image_name: ${{ env.IMAGE_NAME }}
+          image_repo: ${{ env.IMAGE_REPO }}
+          image_tag: ${{ env.IMAGE_TAG }}
+          variant: ${{ env.VARIANT }}
+          version: ${{ env.VERSION }}
+          iso_name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}-${{ env.VERSION }}.iso
+          web_ui: true
 
-      - name: Upload ISOs and Checksum to Job Artifacts
+      - name: Upload
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ matrix.image_name }}-${{ matrix.image_tag }}-${{ matrix.major_version}}
-          path: ${{ steps.build.outputs.output-directory }}
+          name: ${{ steps.build.outputs.iso_name }}
+          path: |
+            ${{ steps.build.outputs.iso_path }}/${{ steps.build.outputs.iso_name }}
+            ${{ steps.build.outputs.iso_path }}/${{ steps.build.outputs.iso_name }}-CHECKSUM
           if-no-files-found: error
           retention-days: 0
           compression-level: 0
-          overwrite: true
