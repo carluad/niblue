@@ -41,7 +41,6 @@ jobs:
           web_ui: true
 
       - name: Upload
-        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.build.outputs.iso_name }}
