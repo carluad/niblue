@@ -1,10 +1,8 @@
-# LzBlue
-Light for the lazy person on me.
+# Niblue
+Light 
 
 ## What is this?
-
-This is a custom Silverblue image designed for my personal usage and preferences, don't rebase to it before getting to know its modifications.
-This image is builded on top of the latest Fedora release only, i dont want to maintain and build images for versions that i don't use.
+todo
 
 ## Usage
 
