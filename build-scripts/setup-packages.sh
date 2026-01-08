@@ -4,7 +4,8 @@ set -ouex pipefail
 
 RELEASE="$(rpm -E %fedora)"
 
-dnf install -y gnome-shell gdm gnome-software epiphany thermald tlp
+dnf install -y gnome-shell gdm gnome-software epiphany nautilus 
+dng install -y distrobox podman-compose podman-docker
 
 # Turtle for nautilus
 # dnf install -y python3-pygit2 python3-secretstorage nautilus-python meld
