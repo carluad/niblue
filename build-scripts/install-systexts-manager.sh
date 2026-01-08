@@ -10,5 +10,5 @@ curl --silent --fail --location "${URL}/${NAME}" \
     | sudo bash -c "cat > /var/lib/extensions.d/${NAME}"
 ln -snf "/var/lib/extensions.d/${NAME}" "/var/lib/extensions/sysexts-manager.raw"
 sudo restorecon -RFv "/var/lib/extensions"{,.d} "/run/extensions"
-sudo systemctl enable systemd-sysext.service
-#sudo systemctl restart systemd-sysext.service
+# sudo systemctl enable systemd-sysext.service
+# sudo systemctl restart systemd-sysext.service

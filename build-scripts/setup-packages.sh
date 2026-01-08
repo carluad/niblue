@@ -4,7 +4,7 @@ set -ouex pipefail
 
 RELEASE="$(rpm -E %fedora)"
 
-dnf install -y gnome-shell gdm gnome-software epiphany nautilus 
+dnf install -y gnome-shell gdm gnome-software epiphany nautilus thermald 
 dnf install -y fastfetch distrobox podman-compose podman-docker
 
 # Turtle for nautilus
