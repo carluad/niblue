@@ -48,7 +48,7 @@ jobs:
 
       - name: Upload ISOs and Checksum to Job Artifacts
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.image_name }}-${{ matrix.image_tag }}-${{ matrix.major_version}}
           path: ${{ steps.build.outputs.output-directory }}
